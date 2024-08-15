@@ -1,0 +1,29 @@
+@import 'normalize.css';
+
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+  background-color: #f7f8fc;
+}
+.icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
+@media (min-width: 640px) {
+  #root {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .page-wrapper {
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      border-radius: 20px;
+      width: 640px;
+      max-height: 770px;
+    }
+  }
+}
