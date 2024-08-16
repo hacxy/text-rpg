@@ -4,18 +4,20 @@ import { usePlayer } from '../../store';
 import CurrencyBar from '../../components/CurrencyBar';
 import MapPanel from './cpns/MapPanel';
 import styles from './index.module.scss';
+import ActionsBar from './cpns/ActionsBar';
 const Home: React.FC = memo(() => {
-  const { loadPlayer, player } = usePlayer();
+  const { loadPlayer } = usePlayer();
 
   useEffect(() => {
     loadPlayer();
-  }, [player]);
+  }, []);
 
   return (
     <div className={styles.homeWrapper}>
       <CurrencyBar />
       <PlayerInfo />
       <MapPanel />
+      <ActionsBar />
     </div>
   );
 });

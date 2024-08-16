@@ -2,8 +2,10 @@ import React, { memo } from 'react';
 import { Card } from 'react-vant';
 import { usePlayer } from '../../store';
 import styles from './index.module.scss';
+
 const CurrencyBar: React.FC = memo(() => {
   const { player } = usePlayer();
+
   return (
     <Card
       className={styles.currencyBarWrapper}

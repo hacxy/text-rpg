@@ -17,7 +17,6 @@ export const usePlayer = () => {
     const code = getPlayerToken();
     if (code) {
       const player = decrypt(code);
-      console.log(player);
       setPlayer(player);
     }
   };
