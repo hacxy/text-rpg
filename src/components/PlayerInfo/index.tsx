@@ -8,14 +8,17 @@ const PlayerInfo: React.FC = memo(() => {
   const { player } = usePlayer();
   return (
     <Card className={styles.playerInfoWrapper}>
-      <Card.Body style={{ paddingTop: 0 }}>
+      <Card.Body className={styles.playerInfoContent} style={{ paddingTop: 0 }}>
         <div className={styles.avatar}>
-          <Image src={Avatar} style={{ width: '100px', height: '100px' }} />
+          <Image src={Avatar} style={{ width: '80px', height: '80px' }} round />
         </div>
-        <div>{player.name}</div>
-        <div>等级: {player.level}</div>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <span style={{ marginRight: '10px' }}>经验:</span> <ExpBar />
+
+        <div className={styles.playerInfo}>
+          <div className={styles.playerName}>{player.name}</div>
+          <div>等级: {player.level}</div>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <span style={{ marginRight: '10px' }}>经验:</span> <ExpBar />
+          </div>
         </div>
       </Card.Body>
     </Card>

@@ -13,7 +13,7 @@ const ExpBar: React.FC = memo(() => {
   return (
     <Progress
       strokeWidth={10}
-      style={{ width: '25%', minWidth: '160px' }}
+      style={{ width: '25%', minWidth: '160px', marginBottom: '-3px', border: '1px solid #333' }}
       percentage={percentage}
       showPivot={false}
     />
