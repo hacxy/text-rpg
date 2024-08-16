@@ -1,0 +1,10 @@
+.regionPanelWrapper {
+  height: 100%;
+  overflow: scroll;
+  padding-top: 10px;
+
+  .disabled {
+    color: #aeaeae;
+    background-color: #eee;
+  }
+}
