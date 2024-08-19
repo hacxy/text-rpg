@@ -45,6 +45,8 @@ export const usePlayer = () => {
       player.level++;
       player.maxExp = Math.floor(player.maxExp * 1.2);
       player.maxHp = Math.floor(player.maxHp * 1.2);
+      player.attack = Math.floor(player.attack * 1.2);
+      player.defense = Math.floor(player.defense * 1.2);
       player.hp = player.maxHp;
     }
     updatePlayer(player);

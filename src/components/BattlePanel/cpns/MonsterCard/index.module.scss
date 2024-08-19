@@ -1,0 +1,12 @@
+.monsterCard {
+  flex-shrink: 0;
+  margin-bottom: 10px;
+  .monsterCardBody {
+    .monsterName {
+      font-size: 1.2rem;
+    }
+    .monsterInfoItem {
+      display: flex;
+    }
+  }
+}

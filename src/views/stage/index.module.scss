@@ -1,0 +1,10 @@
+.stageWrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .stageContent {
+    padding: 10px;
+    box-sizing: border-box;
+  }
+}

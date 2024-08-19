@@ -1,0 +1,10 @@
+.playerCard {
+  margin-bottom: 10px;
+  flex-shrink: 0;
+  .playerName {
+    font-size: 1.2rem;
+  }
+  .playerInfoItem {
+    display: flex;
+  }
+}

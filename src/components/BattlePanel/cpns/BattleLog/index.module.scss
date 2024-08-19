@@ -1,0 +1,12 @@
+.battleLogWrapper {
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  .divider {
+    flex-shrink: 0;
+  }
+  .battleLogContent {
+    height: 100%;
+  }
+}

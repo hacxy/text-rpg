@@ -3,6 +3,7 @@ import Home from '../views/home';
 import Login from '../views/login';
 import Profile from '../views/profile';
 import { redirect, RouteObject } from 'react-router-dom';
+import Stage from '../views/stage';
 
 export type IRouteConfig = RouteObject & {
   name?: string;
@@ -27,6 +28,12 @@ export const routeConfig: IRouteConfig[] = [
       }
       return null;
     }
+  },
+  {
+    name: '场景',
+    path: '/stage',
+    element: <Stage />
+    // icon: <HomeO />
   },
   {
     name: '我的',
