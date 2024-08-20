@@ -1,33 +1,36 @@
-import React, { memo, useEffect } from 'react';
+import React from 'react';
 import { Popup } from 'react-vant';
 import PalyerCard from './cpns/PlayerCard';
 import MonsterCard from './cpns/MonsterCard';
 import BattleLog from './cpns/BattleLog';
 import styles from './index.module.scss';
-// import { useBattle } from '../../store/battle';
+import { Monster } from '../../store/monster';
+import { observer } from 'mobx-react-lite';
+import { battle } from '@/store/battle';
 
-interface Props {
-  visible: boolean;
-  onClose: () => void;
-}
+// interface Props {
+//   visible: boolean;
+//   onClose: () => void;
+// }
 
 // 战斗面板
-const BattlePanel: React.FC<Props> = memo((props) => {
-  const { visible, onClose } = props;
-  // const { addBattleLog } = useBattle();
-  let timer: number;
+const BattlePanel: React.FC = observer(() => {
+  const monster = new Monster('蜘蛛', 1);
 
-  useEffect(() => {
-    if (!timer && visible) {
-      // timer = setInterval(() => {
-      //   addBattleLog('战斗中...');
-      // }, 1000);
-    }
-  }, [visible]);
+  // const { visible, onClose } = props;
+  // let timer: number;
+
+  // useEffect(() => {
+  //   if (!timer && visible) {
+  //     // timer = setInterval(() => {
+  //     //   // console.log(monster.attackTarget(player));
+  //     //   console.log(player.attackTarget(monster));
+  //     // }, 1000);
+  //   }
+  // }, [visible]);
   return (
     <Popup
-      visible={visible}
-      onClose={onClose}
+      visible={battle.openPanel}
       lockScroll
       className={styles.battlePanel}
       style={{ width: '90%', height: '90%', padding: 10 }}
@@ -35,7 +38,7 @@ const BattlePanel: React.FC<Props> = memo((props) => {
       title="战斗"
       round
     >
-      <MonsterCard />
+      <MonsterCard monster={monster} />
       <PalyerCard />
       <BattleLog />
     </Popup>

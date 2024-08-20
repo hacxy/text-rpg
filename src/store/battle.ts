@@ -1,29 +1,50 @@
-import { atom, useAtom } from 'jotai';
-// const battleAtom = atom()
-const battleLogAtom = atom<string[]>([]);
+import { Monster } from '@/store/monster';
+import { player } from '@/store/player';
+import { action, makeAutoObservable } from 'mobx';
 
-export const useBattle = () => {
-  const [battleLog, setBattleLog] = useAtom(battleLogAtom);
+export class Battle {
+  battleLogs: string[] = [];
+  openPanel = false;
+  playerAttackTimer: number = 0;
+  monsterAttackTimer: number = 0;
 
-  const startBattle = () => {
-    setBattleLog([]);
-    // addBattleLog('开始战斗');
-  };
-
-  const addBattleLog = (log: string) => {
-    // 最多保留100条
-    // 如果超过100条，则删除第一条
-
-    setBattleLog((prev) => {
-      if (prev.length >= 100) {
-        prev.shift();
-      }
-      return [...prev, log];
+  constructor() {
+    makeAutoObservable(this, {
+      startBattle: action,
+      endBattle: action,
+      addBattleLog: action
     });
-  };
-  return {
-    startBattle,
-    battleLog,
-    addBattleLog
-  };
-};
+  }
+
+  startBattle(monster: Monster) {
+    this.openPanel = true;
+
+    this.playerAttackTimer = setInterval(() => {
+      console.log('111111');
+      player.attackTarget(monster);
+      this.addBattleLog(`${player.name} 攻击了 ${monster.name}`);
+    }, 1000);
+
+    this.monsterAttackTimer = setInterval(() => {
+      console.log('222222');
+      monster.attackTarget();
+      this.addBattleLog(`${monster.name} 攻击了 ${player.name}`);
+    }, 1000);
+  }
+
+  endBattle() {
+    // this.openPanel = false;
+    this.battleLogs = [];
+    clearInterval(this.playerAttackTimer);
+    clearInterval(this.monsterAttackTimer);
+  }
+
+  addBattleLog(log: string) {
+    this.battleLogs.push(log);
+    if (this.battleLogs.length > 100) {
+      this.battleLogs.shift();
+    }
+  }
+}
+
+export const battle = new Battle();

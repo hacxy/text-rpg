@@ -1,4 +1,6 @@
-import { Player } from '../store';
+import { makeAutoObservable } from 'mobx';
+import { player } from './player';
+import { battle } from '@/store/battle';
 
 export class Monster {
   name: string;
@@ -19,15 +21,17 @@ export class Monster {
     this.maxMp = 100 * level;
     this.attack = 10 * level;
     this.defense = 10 * level;
+    makeAutoObservable(this);
   }
 
-  attackTarget(target: Player) {
-    const damage = this.attack - target.defense;
-    if (damage > 0) {
-      target.hp -= damage;
-      return `${this.name}对${target.name}造成了${damage}点伤害`;
-    } else {
-      return `${this.name}的攻击被${target.name}挡住了`;
+  attackTarget() {
+    const damage = this.attack - player.defense;
+    player.hp -= damage;
+    if (player.hp <= 0) {
+      player.hp = 0;
+      battle.endBattle();
     }
+
+    return damage;
   }
 }

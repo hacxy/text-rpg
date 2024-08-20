@@ -10,7 +10,9 @@ export const router: Router = createBrowserRouter([
     children: [
       {
         path: '/',
-        loader: () => redirect('/home')
+        loader: () => {
+          return redirect('/main');
+        }
       },
       ...routeConfig
     ]

@@ -6,6 +6,10 @@ export default defineConfig({
   server: {
     port: 1118
   },
-
+  resolve: {
+    alias: {
+      '@': '/src'
+    }
+  },
   plugins: [react()]
 });

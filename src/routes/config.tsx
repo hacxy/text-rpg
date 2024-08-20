@@ -1,9 +1,8 @@
-import { getPlayerToken } from '../utils';
-import Home from '../views/home';
+import Home from '../views/main/home';
 import Login from '../views/login';
-import Profile from '../views/profile';
 import { redirect, RouteObject } from 'react-router-dom';
-import Stage from '../views/stage';
+import Stage from '@/views/main/stage';
+import Main from '../views/main';
 
 export type IRouteConfig = RouteObject & {
   name?: string;
@@ -17,29 +16,31 @@ export const routeConfig: IRouteConfig[] = [
   },
   {
     name: '首页',
-    path: '/home',
-    index: true,
-    element: <Home />,
-    // icon: <HomeO />,
-    loader: () => {
-      const code = getPlayerToken();
-      console.log(code, 'code');
-      if (!code) {
-        return redirect('/login');
+    path: '/main',
+    element: <Main />,
+    children: [
+      {
+        path: '/main',
+        element: <Main />,
+        loader: () => {
+          return redirect('/main/home');
+        }
+      },
+      {
+        path: 'home',
+        index: true,
+        element: <Home />
+      },
+      {
+        path: 'stage',
+        element: <Stage />
       }
-      return null;
+    ]
+  },
+  {
+    path: '*',
+    loader: () => {
+      return redirect('/main');
     }
-  },
-  {
-    name: '场景',
-    path: '/stage',
-    element: <Stage />
-    // icon: <HomeO />
-  },
-  {
-    name: '我的',
-    path: '/profile',
-    element: <Profile />
-    // icon: <FriendsO />
   }
 ];

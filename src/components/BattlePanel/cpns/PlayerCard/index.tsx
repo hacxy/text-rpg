@@ -3,7 +3,7 @@ import { Card } from 'react-vant';
 import styles from './index.module.scss';
 import ValueBar from '../../../ValueBar';
 import classNames from 'classnames';
-import { player } from '../../../../store';
+import { player } from '@/store';
 import { observer } from 'mobx-react-lite';
 
 const PalyerCard: React.FC = observer(() => {

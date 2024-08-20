@@ -13,7 +13,7 @@ const Login: React.FC = observer(() => {
   const onFinish = (data: { playerName?: string; recordCode?: string }) => {
     setVisible(false);
     player.register(data.playerName || '');
-    navigate('/home');
+    navigate('/main');
   };
 
   const formContent = () => {

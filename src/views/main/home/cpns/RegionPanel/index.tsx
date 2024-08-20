@@ -2,10 +2,10 @@ import React from 'react';
 import { Cell, Toast } from 'react-vant';
 import classNames from 'classnames';
 import styles from './index.module.scss';
-import { REGION_LIST } from '../../../../constants';
-import IconFont from '../../../../components/IconFont';
+import { REGION_LIST } from '@/constants';
+import IconFont from '@/components/IconFont';
 import { useNavigate } from 'react-router-dom';
-import { player } from '../../../../store';
+import { player } from '@/store';
 import { observer } from 'mobx-react-lite';
 
 const RegionPanel: React.FC = observer(() => {
@@ -24,7 +24,7 @@ const RegionPanel: React.FC = observer(() => {
                 if (item.levelLimit > player.level) {
                   Toast('等级不足');
                 } else {
-                  navigate('/stage');
+                  navigate('/main/stage');
                 }
               }}
               clickable

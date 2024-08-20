@@ -1,0 +1,10 @@
+.mainWrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  .pageContent {
+    height: 100%;
+    overflow: hidden;
+  }
+}

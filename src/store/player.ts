@@ -1,6 +1,8 @@
 import { decrypt, encrypt, getPlayerToken, setPlayerToken } from '../utils';
 import { action, autorun, makeAutoObservable } from 'mobx';
 import { IPlayer } from './types';
+import { Monster } from './monster';
+import { battle } from '@/store/battle';
 
 export class Player implements IPlayer {
   name: string; // 名字
@@ -21,6 +23,7 @@ export class Player implements IPlayer {
   constructor() {
     const token = getPlayerToken();
     const init = token ? decrypt(token) : {};
+
     this.name = init.name || '';
     this.level = init.level || 1;
     this.exp = init.exp || 0;
@@ -57,6 +60,17 @@ export class Player implements IPlayer {
 
   register(name: string) {
     this.name = name;
+  }
+
+  // 攻击目标
+  attackTarget(target: Monster) {
+    const damage = Math.max(this.attack - target.defense, 1);
+    target.hp -= damage;
+    if (target.hp <= 0) {
+      target.hp = 0;
+      battle.endBattle();
+    }
+    return damage;
   }
 }
 

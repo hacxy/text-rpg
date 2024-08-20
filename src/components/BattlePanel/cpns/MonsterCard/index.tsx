@@ -1,13 +1,16 @@
-import React, { memo } from 'react';
-import { Monster } from '../../../../entitys/monster';
+import React from 'react';
 import { Card } from 'react-vant';
 import ValueBar from '../../../ValueBar';
 import styles from './index.module.scss';
 import classNames from 'classnames';
+import { Monster } from '../../../../store/monster';
+import { observer } from 'mobx-react-lite';
+interface Props {
+  monster: Monster;
+}
+const MonsterCard: React.FC<Props> = observer((props) => {
+  const { monster } = props;
 
-const MonsterCard: React.FC = memo(() => {
-  // const { monster } = props;
-  const monster = new Monster('蜘蛛', 10);
   return (
     <Card className={styles.monsterCard} border round>
       <Card.Body className={styles.monsterCardBody}>
