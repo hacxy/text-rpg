@@ -1,12 +1,12 @@
-import React, { memo } from 'react';
+import React from 'react';
 import { Card } from 'react-vant';
 import styles from './index.module.scss';
-import { usePlayer } from '../../../../store';
 import ValueBar from '../../../ValueBar';
 import classNames from 'classnames';
+import { player } from '../../../../store';
+import { observer } from 'mobx-react-lite';
 
-const PalyerCard: React.FC = memo(() => {
-  const { player } = usePlayer();
+const PalyerCard: React.FC = observer(() => {
   return (
     <Card round border className={styles.playerCard}>
       <Card.Body>

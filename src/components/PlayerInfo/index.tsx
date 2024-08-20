@@ -1,12 +1,12 @@
-import React, { memo } from 'react';
-import { usePlayer } from '../../store';
+import React from 'react';
 import { Card, Image } from 'react-vant';
 import styles from './index.module.scss';
 import Avatar from '../../assets/avatar/04.jpg';
 import ValueBar from '../ValueBar';
+import { player } from '../../store';
+import { observer } from 'mobx-react-lite';
 
-const PlayerInfo: React.FC = memo(() => {
-  const { player } = usePlayer();
+const PlayerInfo: React.FC = observer(() => {
   return (
     <Card className={styles.playerInfoWrapper}>
       <Card.Body className={styles.playerInfoContent} style={{ paddingTop: 0 }}>

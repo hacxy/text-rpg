@@ -1,18 +1,18 @@
-import React, { memo, useState } from 'react';
+import React, { useState } from 'react';
 import { Button, Card, Cell, Form, Input, Popup } from 'react-vant';
 import styles from './index.module.scss';
-import { usePlayer } from '../../store';
 import { useNavigate } from 'react-router-dom';
+import { player } from '../../store';
+import { observer } from 'mobx-react-lite';
 
-const Login: React.FC = memo(() => {
+const Login: React.FC = observer(() => {
   const [visible, setVisible] = useState(false);
   const [startType, setStartType] = useState<'New' | 'Old'>('New');
-  const { createPlayer } = usePlayer();
   const navigate = useNavigate();
 
   const onFinish = (data: { playerName?: string; recordCode?: string }) => {
     setVisible(false);
-    createPlayer(data.playerName || '');
+    player.register(data.playerName || '');
     navigate('/home');
   };
 

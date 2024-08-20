@@ -18,3 +18,7 @@ export const clearLocalStorage = () => {
 export const getPlayerToken = () => {
   return getLocalStorage('PLAYER_TOKEN');
 };
+
+export const setPlayerToken = (token: string) => {
+  setLocalStorage('PLAYER_TOKEN', token);
+};

@@ -1,14 +1,14 @@
-import React, { memo } from 'react';
+import React from 'react';
 import { Cell, Toast } from 'react-vant';
 import classNames from 'classnames';
 import styles from './index.module.scss';
 import { REGION_LIST } from '../../../../constants';
 import IconFont from '../../../../components/IconFont';
-import { usePlayer } from '../../../../store';
 import { useNavigate } from 'react-router-dom';
+import { player } from '../../../../store';
+import { observer } from 'mobx-react-lite';
 
-const RegionPanel: React.FC = memo(() => {
-  const { player } = usePlayer();
+const RegionPanel: React.FC = observer(() => {
   const navigate = useNavigate();
   return (
     <div className={styles.regionPanelWrapper}>

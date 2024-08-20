@@ -4,21 +4,24 @@ import PalyerCard from './cpns/PlayerCard';
 import MonsterCard from './cpns/MonsterCard';
 import BattleLog from './cpns/BattleLog';
 import styles from './index.module.scss';
-import { useBattle } from '../../store/battle';
+// import { useBattle } from '../../store/battle';
+
 interface Props {
   visible: boolean;
   onClose: () => void;
 }
+
 // 战斗面板
 const BattlePanel: React.FC<Props> = memo((props) => {
   const { visible, onClose } = props;
-  const { addBattleLog } = useBattle();
+  // const { addBattleLog } = useBattle();
   let timer: number;
+
   useEffect(() => {
     if (!timer && visible) {
-      timer = setInterval(() => {
-        addBattleLog('123');
-      }, 1000);
+      // timer = setInterval(() => {
+      //   addBattleLog('战斗中...');
+      // }, 1000);
     }
   }, [visible]);
   return (

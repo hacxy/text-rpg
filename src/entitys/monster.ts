@@ -1,3 +1,5 @@
+import { Player } from '../store';
+
 export class Monster {
   name: string;
   level: number;
@@ -17,5 +19,15 @@ export class Monster {
     this.maxMp = 100 * level;
     this.attack = 10 * level;
     this.defense = 10 * level;
+  }
+
+  attackTarget(target: Player) {
+    const damage = this.attack - target.defense;
+    if (damage > 0) {
+      target.hp -= damage;
+      return `${this.name}对${target.name}造成了${damage}点伤害`;
+    } else {
+      return `${this.name}的攻击被${target.name}挡住了`;
+    }
   }
 }

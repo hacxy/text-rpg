@@ -1,12 +1,11 @@
-import React, { memo } from 'react';
+import React from 'react';
 import { Card } from 'react-vant';
-import { usePlayer } from '../../store';
 import styles from './index.module.scss';
 import IconFont from '../IconFont';
+import { player } from '../../store';
+import { observer } from 'mobx-react-lite';
 
-const CurrencyBar: React.FC = memo(() => {
-  const { player } = usePlayer();
-
+const CurrencyBar: React.FC = observer(() => {
   return (
     <Card
       className={styles.currencyBarWrapper}

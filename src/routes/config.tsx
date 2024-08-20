@@ -23,6 +23,7 @@ export const routeConfig: IRouteConfig[] = [
     // icon: <HomeO />,
     loader: () => {
       const code = getPlayerToken();
+      console.log(code, 'code');
       if (!code) {
         return redirect('/login');
       }

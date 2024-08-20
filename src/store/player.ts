@@ -1,62 +1,69 @@
-import { atom, useAtom } from 'jotai';
-import { Player } from './types';
-import { decrypt, encrypt, getPlayerToken, setLocalStorage } from '../utils';
-import { DEFAULT_PLAYER_INFO } from '../constants';
-import { useEffect } from 'react';
-import { PartialDeep } from 'type-fest';
-const playerAtom = atom<Player>(DEFAULT_PLAYER_INFO);
+import { decrypt, encrypt, getPlayerToken, setPlayerToken } from '../utils';
+import { action, autorun, makeAutoObservable } from 'mobx';
+import { IPlayer } from './types';
 
-export const usePlayer = () => {
-  const [player, setPlayer] = useAtom(playerAtom);
+export class Player implements IPlayer {
+  name: string; // 名字
+  level: number; // 等级
+  exp: number; // 经验
+  maxExp: number; // 最大经验
+  hp: number; // 生命值
+  maxHp: number; // 最大生命值
+  mp: number;
+  maxMp: number;
+  attack: number; // 攻击力
+  defense: number; // 防御力
+  gold: number; // 金币
+  str: number; // 力量
+  int: number; // 智力
+  agi: number; // 敏捷
 
-  const updatePlayer = (player: PartialDeep<Player>) => {
-    setPlayer((preValue) => ({
-      ...preValue,
-      ...player
-    }));
-  };
+  constructor() {
+    const token = getPlayerToken();
+    const init = token ? decrypt(token) : {};
+    this.name = init.name || '';
+    this.level = init.level || 1;
+    this.exp = init.exp || 0;
+    this.maxExp = init.maxExp || 100;
+    this.hp = init.hp || 100;
+    this.maxHp = init.maxHp || 100;
+    this.mp = init.mp || 100;
+    this.maxMp = init.maxMp || 100;
+    this.attack = init.attack || 10;
+    this.defense = init.defense || 0;
+    this.gold = init.gold || 0;
+    this.str = init.str || 0;
+    this.int = init.int || 0;
+    this.agi = init.agi || 0;
 
-  useEffect(() => {
-    if (player.name) {
-      const code = encrypt(player);
-      setLocalStorage('PLAYER_TOKEN', code);
+    makeAutoObservable(this, {
+      register: action,
+      gainExp: action
+    });
+  }
+
+  gainExp(exp: number) {
+    this.exp += exp;
+    while (this.exp >= this.maxExp) {
+      this.exp -= this.maxExp;
+      this.level++;
+      this.maxExp = Math.floor(this.maxExp * 1.2);
+      this.maxHp = Math.floor(this.maxHp * 1.2);
+      this.attack = Math.floor(this.attack * 1.2);
+      this.defense = Math.floor(this.defense * 1.2);
+      this.hp = this.maxHp;
     }
-  }, [player]);
+  }
 
-  const loadPlayer = () => {
-    const code = getPlayerToken();
-    if (code) {
-      const player = decrypt(code);
-      setPlayer(player);
-    }
-  };
+  register(name: string) {
+    this.name = name;
+  }
+}
 
-  const createPlayer = (name: string) => {
-    setPlayer((preValue) => ({
-      ...preValue,
-      name
-    }));
-  };
+export const player = new Player();
 
-  const gainExp = (exp: number) => {
-    player.exp += exp;
-    while (player.exp >= player.maxExp) {
-      player.exp -= player.maxExp;
-      player.level++;
-      player.maxExp = Math.floor(player.maxExp * 1.2);
-      player.maxHp = Math.floor(player.maxHp * 1.2);
-      player.attack = Math.floor(player.attack * 1.2);
-      player.defense = Math.floor(player.defense * 1.2);
-      player.hp = player.maxHp;
-    }
-    updatePlayer(player);
-  };
-
-  return {
-    player,
-    setPlayer,
-    gainExp,
-    createPlayer,
-    loadPlayer
-  };
-};
+autorun(() => {
+  if (player.name) {
+    setPlayerToken(encrypt(player));
+  }
+});
