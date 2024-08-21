@@ -7,6 +7,7 @@ export class Battle {
   openPanel = false;
   playerAttackTimer: number = 0;
   monsterAttackTimer: number = 0;
+  currentMonster: Monster | null = null;
 
   constructor() {
     makeAutoObservable(this, {
@@ -18,25 +19,31 @@ export class Battle {
 
   startBattle(monster: Monster) {
     this.openPanel = true;
-
-    this.playerAttackTimer = setInterval(() => {
-      console.log('111111');
-      player.attackTarget(monster);
-      this.addBattleLog(`${player.name} 攻击了 ${monster.name}`);
+    this.currentMonster = monster;
+    if (player.hp <= 0 || monster.hp <= 0) {
+      this.endBattle();
+    }
+    this.monsterAttackTimer = setInterval(() => {
+      const damage = monster.attackTarget();
+      this.addBattleLog(`${monster.name} 攻击了 ${player.name} 造成 ${damage} 点伤害`);
+      if (player.hp <= 0) this.endBattle();
     }, 1000);
 
-    this.monsterAttackTimer = setInterval(() => {
-      console.log('222222');
-      monster.attackTarget();
-      this.addBattleLog(`${monster.name} 攻击了 ${player.name}`);
+    this.playerAttackTimer = setInterval(() => {
+      const damage = player.attackTarget(monster);
+      this.addBattleLog(`${player.name} 攻击了 ${monster.name} 造成 ${damage} 点伤害`);
+      if (monster.hp <= 0) this.endBattle();
     }, 1000);
   }
 
   endBattle() {
     // this.openPanel = false;
-    this.battleLogs = [];
     clearInterval(this.playerAttackTimer);
     clearInterval(this.monsterAttackTimer);
+    this.addBattleLog('战斗结束');
+    setTimeout(() => {
+      this.battleLogs = [];
+    }, 0);
   }
 
   addBattleLog(log: string) {

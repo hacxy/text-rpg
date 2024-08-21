@@ -2,7 +2,6 @@ import { decrypt, encrypt, getPlayerToken, setPlayerToken } from '../utils';
 import { action, autorun, makeAutoObservable } from 'mobx';
 import { IPlayer } from './types';
 import { Monster } from './monster';
-import { battle } from '@/store/battle';
 
 export class Player implements IPlayer {
   name: string; // 名字
@@ -23,21 +22,21 @@ export class Player implements IPlayer {
   constructor() {
     const token = getPlayerToken();
     const init = token ? decrypt(token) : {};
-
-    this.name = init.name || '';
-    this.level = init.level || 1;
-    this.exp = init.exp || 0;
-    this.maxExp = init.maxExp || 100;
-    this.hp = init.hp || 100;
-    this.maxHp = init.maxHp || 100;
-    this.mp = init.mp || 100;
-    this.maxMp = init.maxMp || 100;
-    this.attack = init.attack || 10;
-    this.defense = init.defense || 0;
-    this.gold = init.gold || 0;
-    this.str = init.str || 0;
-    this.int = init.int || 0;
-    this.agi = init.agi || 0;
+    console.log(init);
+    this.name = init.name ?? '';
+    this.level = init.level ?? 1;
+    this.exp = init.exp ?? 0;
+    this.maxExp = init.maxExp ?? 100;
+    this.hp = init.hp ?? 100;
+    this.maxHp = init.maxHp ?? 100;
+    this.mp = init.mp ?? 100;
+    this.maxMp = init.maxMp ?? 100;
+    this.attack = init.attack ?? 20;
+    this.defense = init.defense ?? 0;
+    this.gold = init.gold ?? 0;
+    this.str = init.str ?? 0;
+    this.int = init.int ?? 0;
+    this.agi = init.agi ?? 0;
 
     makeAutoObservable(this, {
       register: action,
@@ -65,12 +64,15 @@ export class Player implements IPlayer {
   // 攻击目标
   attackTarget(target: Monster) {
     const damage = Math.max(this.attack - target.defense, 1);
-    target.hp -= damage;
-    if (target.hp <= 0) {
-      target.hp = 0;
-      battle.endBattle();
-    }
+    target.tageDamage(damage);
     return damage;
+  }
+
+  takeDamage(damage: number) {
+    this.hp -= damage;
+    if (this.hp <= 0) {
+      this.hp = 0;
+    }
   }
 }
 

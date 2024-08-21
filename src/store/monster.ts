@@ -1,6 +1,5 @@
 import { makeAutoObservable } from 'mobx';
 import { player } from './player';
-import { battle } from '@/store/battle';
 
 export class Monster {
   name: string;
@@ -25,13 +24,15 @@ export class Monster {
   }
 
   attackTarget() {
-    const damage = this.attack - player.defense;
-    player.hp -= damage;
-    if (player.hp <= 0) {
-      player.hp = 0;
-      battle.endBattle();
-    }
-
+    const damage = Math.max(this.attack - player.defense, 1);
+    player.takeDamage(damage);
+    // console.log(player);
     return damage;
+  }
+  tageDamage(damage: number) {
+    this.hp -= damage;
+    if (this.hp <= 0) {
+      this.hp = 0;
+    }
   }
 }

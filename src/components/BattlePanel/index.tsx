@@ -4,7 +4,6 @@ import PalyerCard from './cpns/PlayerCard';
 import MonsterCard from './cpns/MonsterCard';
 import BattleLog from './cpns/BattleLog';
 import styles from './index.module.scss';
-import { Monster } from '../../store/monster';
 import { observer } from 'mobx-react-lite';
 import { battle } from '@/store/battle';
 
@@ -15,8 +14,6 @@ import { battle } from '@/store/battle';
 
 // 战斗面板
 const BattlePanel: React.FC = observer(() => {
-  const monster = new Monster('蜘蛛', 1);
-
   // const { visible, onClose } = props;
   // let timer: number;
 
@@ -38,7 +35,7 @@ const BattlePanel: React.FC = observer(() => {
       title="战斗"
       round
     >
-      <MonsterCard monster={monster} />
+      <MonsterCard monster={battle.currentMonster} />
       <PalyerCard />
       <BattleLog />
     </Popup>
