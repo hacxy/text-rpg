@@ -18,11 +18,16 @@ export class Battle {
   }
 
   startBattle(monster: Monster) {
+    clearInterval(this.playerAttackTimer);
+    clearInterval(this.monsterAttackTimer);
+    this.battleLogs = [];
     this.openPanel = true;
     this.currentMonster = monster;
     if (player.hp <= 0 || monster.hp <= 0) {
       this.endBattle();
+      return;
     }
+
     this.monsterAttackTimer = setInterval(() => {
       const damage = monster.attackTarget();
       this.addBattleLog(`${monster.name} 攻击了 ${player.name} 造成 ${damage} 点伤害`);
@@ -41,9 +46,14 @@ export class Battle {
     clearInterval(this.playerAttackTimer);
     clearInterval(this.monsterAttackTimer);
     this.addBattleLog('战斗结束');
-    setTimeout(() => {
-      this.battleLogs = [];
-    }, 0);
+
+    if (player.hp <= 0) {
+      this.addBattleLog('你被击败了！');
+      return false;
+    } else {
+      this.addBattleLog('你战胜了怪物！');
+      return true;
+    }
   }
 
   addBattleLog(log: string) {

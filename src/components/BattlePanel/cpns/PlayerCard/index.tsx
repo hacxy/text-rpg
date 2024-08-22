@@ -8,7 +8,8 @@ import { observer } from 'mobx-react-lite';
 
 const PalyerCard: React.FC = observer(() => {
   return (
-    <Card round border className={styles.playerCard}>
+    <Card round border className={classNames(styles.playerCard)}>
+      <div className={styles.damageIndicator}>1000</div>
       <Card.Body>
         <div className={classNames(styles.playerInfoItem, styles.playerName)}>{player.name}</div>
         <div className={styles.playerInfoItem}>等级: {player.level}</div>
